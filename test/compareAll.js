@@ -53,4 +53,25 @@ describe('dedupe.compareAll()', function() {
 				done();
 			});
 	});
+
+	it('should compare a library with duplicates 2', function(done) {
+		this.timeout(10 * 10000);
+		var library = require('./data/dupeissues.json');
+		var dedupe = dedupeLib();
+		var dupes = [];
+		var progressUpdates = 0;
+		dedupe.compareAll(library)
+			.on('dupe', function(ref1, ref2, result) {
+				console.log(result);
+				dupes.push(result);
+			})
+			.on('progress', function(current, max) {
+				progressUpdates++;
+			})
+			.on('end', function() {
+				// expect(progressUpdates).to.be.above(0);
+				expect(dupes).to.have.length(1); // Should only remove one duplicate
+				done();
+			});
+	});
 });

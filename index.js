@@ -89,17 +89,18 @@ function SRADedupe(settings) {
 		) return {isDupe: false, reason: 'year'};
 		// }}}
 
+		// NOTE: Because ISBN is the same between journals this feature has been removed
 		// Stage 5 - Extract numbers from ISBNs on either side and compare {{{
 		// This comparison only works if each side has a 'perfect' ISBN - i.e. /^\s*[0-9\.\-\s]+\s*$/
 		// This test uses the certainty that ISBN numbers are unlikely to be mangled
 		// If both (de-noised) ISBNs match the ref is declared a dupe, if not they are declared a NON dupe
-		if(dedupe.settings.match.isbn){
-			var r1Isbn = dedupe.getNumeric(ref1.isbn);
-			var r2Isbn = dedupe.getNumeric(ref2.isbn);
-			if(r1Isbn !== false && r2Isbn !== false){ // Can compare ISBNs
-				return {isDupe: r1Isbn == r2Isbn, reason: 'isbn'}; // If direct match its a dupe, if not its NOT a dupe
-			}
-		}
+		// if(dedupe.settings.match.isbn){
+		// 	var r1Isbn = dedupe.getNumeric(ref1.isbn);
+		// 	var r2Isbn = dedupe.getNumeric(ref2.isbn);
+		// 	if(r1Isbn !== false && r2Isbn !== false){ // Can compare ISBNs
+		// 		return {isDupe: r1Isbn == r2Isbn, reason: 'isbn'}; // If direct match its a dupe, if not its NOT a dupe
+		// 	}
+		// }
 		// }}}
 		
 		// Stage 6 - Comparison of title + authors via string distance checking {{{
